@@ -442,9 +442,13 @@ Terminals have no action to choose. Intuition for each:
 - (2,1): head North to the +20 (70%); slipping west does nothing (wall). Notice **don't** go South, the −20 is right there!
 - (2,3): North to the +5 cell.
 - (3,3): North towards the good stuff.
-- (3,2): this state is *next to the −20*. North slips west into −20 with 30%; West goes into it 70%. With only two iterations of information there's nothing good to head toward, so safest options tie. (After more iterations, the policy would change: E would win because it leads toward (3,3) → (2,3) → (1,3).)
+- (3,2): this state is *next to the −20*. North slips west into −20 with 30%; West goes into it 70%. With only two iterations of information there's nothing good to head toward, so the safe options tie.
 
-**Why only 2 iterations matters:** with more iterations this policy changes in places (e.g. (3,2)). The question tells you to use U₂ on purpose, so you practise the argmax procedure without waiting for convergence.
+**Why "after 2 iterations" matters (verified by running value iteration further):** the policy you extract depends on how far the values have spread. Policy read from U₂ vs later tables:
+- (3,2): from U₂ a tie (E/S/Stay); from U₃, U₄, U₅ it is **North** (once (2,2) has a high value, the 70% chance of reaching it is worth the 30% slip into −20); at convergence (≈50 iterations) it is **East** (go via (3,3) instead and avoid the −20 risk).
+- (2,3): North from U₂, but **West** at convergence (the route toward the +20 beats the +5).
+- All other cells keep the same action.
+The question tells you to use U₂ on purpose, so you practise the argmax procedure on the table you are given, without waiting for convergence. In the exam, always use the table the question names.
 
 ---
 
