@@ -680,3 +680,47 @@ U_new(s)= R(s) + γ · max_a Q(s,a)            terminals: U = R
 Policy evaluation: same as U_new but plug in π(s) instead of max
 Sanity: U_i ≥ −i for R=−1, γ=1; value leaks outward 1 step per iteration
 ```
+
+---
+
+# PART 12 — Checked against the OFFICIAL solution (tute-09-SOL.pdf)
+
+**Result: every number in this guide matches the official solutions.** U₁, U₂, U₃ tables, the policy at (1,2), the policy-evaluation table, 1(b) values (16, −0.625, −∞, −2) all agree. Details worth knowing:
+
+1. **−0.06 vs −0.059.** The official U₃(3,3) is printed as −0.059. The exact value is −1 + (0.7·2.2 + 0.3·(−2)) = −0.06. The −0.059 is a floating-point artefact of their calculator. Write −0.06 (or −0.059); both will be accepted.
+2. **Marking style = show the formula with T terms.** The official working for one cell looks like this — copy this format in the exam:
+   - U₁((1,2)) = −1 + γ[T((1,2),west,(1,1))·U₀(1,1) + T((1,2),west,(1,2))·U₀(1,2)] = −1 + 1×[0.7×0 + 0.3×0] = −1
+   - U₁((1,1)) = 20 + γ[T((1,1),stay,(1,1))·U₀(1,1)] = 20   *(terminal: its only action is "stay", and it keeps U = R)*
+   - U₂((1,2)) = −1 + 1×[0.7×20 + 0.3×(−1)] = **12.7**
+   - U₃((1,2)) = −1 + 1×[0.7×20 + 0.3×12.7] = **16.81**
+   - Official statement to quote: "moving west is the best action (in general you'd compute the term for every action and keep the max)."
+3. **Policy question (2b):** the official answer only requires π((1,2)) = west (shown for one cell). Doing all cells (as in Part 6) is more than required, but ties must be stated.
+4. **Policy evaluation (2c):** the official table matches (4.3, −2, 2.2, −7.7, −2, −0.8). They stress: "we do not take the max because at every state we know what to do, namely π(s)".
+5. **Q2(d) official answer:** "If the reward is positive and large in magnitude for non-terminal states, and γ is small, then it is possible for an agent to choose to stay." Our example (R(A)=+1, terminal reward 0, γ=0.9) is a valid concrete grid. The exact condition: Stay beats leaving to a terminal with reward R_T when R/(1−γ) > R + γ·R_T. Quote the official phrase *and* give a numeric example.
+6. **Q3 official method (use these exact words in the exam):** for each state s′ in the original MDP:
+   - If **all** transitions arriving at s′ have the **same** reward, keep s′ and give it that reward.
+   - Otherwise make a **copy s′_{s,a}** for every incoming transition (s,a,s′) and set R(s′_{s,a}) = R(s,a,s′). Every copy keeps **all outgoing transitions** of s′.
+
+   Applied to the student MDP:
+
+   | Original state | Incoming rewards | New state(s) and R |
+   |---|---|---|
+   | s1 | Facebook from s0: −1; Facebook from s1: −1 (same) | keep s1, R = **−1** (no copy) |
+   | s0 | Quit from s1: 0; Pub from s3: +1 | s0_{s1,quit}: **0**; s0_{s3,pub}: **+1** |
+   | s2 | Study from s0: −2; Pub from s3: +1 | s2_{s0,study}: **−2**; s2_{s3,pub}: **+1** |
+   | s3 | Study from s2: −2; Pub from s3: +1 | s3_{s2,study}: **−2**; s3_{s3,pub}: **+1** |
+   | s4 | Sleep from s2: 0; Study from s3: +10 | s4_{s2,sleep}: **0**; s4_{s3,study}: **+10** |
+
+   Transitions: both copies of s0 go to s1 with probability 1 under Facebook, and to s2_{s0,study} under Study. A copy of s2 goes under Study to s3_{s2,study}; under Sleep to s4_{s2,sleep}. A copy of s3 goes under Study to s4_{s3,study}; under Pub to s0_{s3,pub} (0.2), s2_{s3,pub} (0.4), s3_{s3,pub} (0.4). This is the same MDP as "Method B" in Part 6, with the official naming.
+
+# PART 13 — Where this sits in the textbook (AIMA 4th ed., Russell & Norvig)
+This week's reading (chapters 15–16, highlighted sections only):
+| Section | What it gives you | Maps to this tutorial |
+|---|---|---|
+| 15.1 Combining Beliefs and Desires under Uncertainty | The Maximum Expected Utility (MEU) principle: pick the action with the highest expected utility | Q2(b) "using the MEU principle" = argmax of Σ T·U |
+| 15.2 The Basis of Utility Theory | Why preferences can be turned into numbers (utility) | Why "utility" is a sensible thing to maximise |
+| 15.3 Utility Functions | What utility numbers mean (e.g. utility of money, risk) | Concept only; low exam weight |
+| 16.1 Sequential Decision Problems | The MDP definition, rewards over time, additive vs discounted utility, optimal policy | Q1 (all), 1(b) |
+| 16.2 Algorithms for MDPs | The Bellman equation, **value iteration**, **policy iteration** | Q2 (a)(b)(c) |
+
+Note the book writes the reward as R(s,a,s′) and the Bellman equation as U(s) = max_a Σ P(s′|s,a)[R(s,a,s′) + γU(s′)]; the tutorial uses R(s) (Q3 is exactly about converting between them). Policy iteration (also in 16.2) = alternate "evaluate the policy" (Q2c) and "improve the policy by argmax" (Q2b) until nothing changes — you already know both halves.
