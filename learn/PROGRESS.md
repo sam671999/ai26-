@@ -1,7 +1,5 @@
 # Progress (update after every session)
-Mastered = can solve the tutorial cold, then a changed-numbers variant, with no help.
-
 | Tutorial | Topic | Status |
 |---|---|---|
-| T9 | MDPs, value iteration, policies | Lessons 1-4 written (learn/lessons/). Next: learner works Lesson 1 checkpoints, then lessons 3-4, then the tutorial by hand. |
+| T9 | MDPs, value iteration, policies | Skills 1-8 taught. Mock exam done for Q1 and Q2(a)(b)(c) (arithmetic slips only). Not yet attempted: mock 2(d), mock Q3, and the real tutorial. Learner chose to move on. Redo the real tutorial cold on a later day (spaced recall). Formula sheet: learn/reference/T09-formula-sheet.md |
 | T1-T8, T10-T12 | not yet uploaded | - |
