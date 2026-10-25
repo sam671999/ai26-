@@ -38,3 +38,15 @@ State = what the agent needs to know; actions = what it can do; reward = when/wh
 ## Successor-state axioms (tutorial Q3e)
 F_t <=> (an action at t-1 made F true) OR (F_{t-1} AND no action at t-1 made F false)
 Ask: how can F become true? How can it stay true? Check each case against the world's rules (walls, locked gate, key).
+
+---
+# Q1 cheat-sheet block (context for each formula)
+1. U^pi(s) = E[ sum_t gamma^t R(S_t) ] : utility of s under fixed policy pi (includes R(s0)).
+2. Bellman for a fixed policy: U^pi(s) = R(s) + gamma * SUM_s' T(s,pi(s),s') U^pi(s'). ADP solves it with T_hat; TD samples it.
+3. Direct utility estimation: U^pi(s) ~ average reward-to-go (ignores links between states, slow).
+4. ADP: N(s,a), N(s,a,s'), T_hat = N(s,a,s')/N(s,a). Checks: sum N(s,a) = total steps; sums to N(s,a); T_hat sums to 1.
+5. TD: U(s) <- U(s) + alpha[R(s) + gamma*U(s') - U(s)]; sample = R(s)+gamma U(s'); error = sample - U(s).
+   Order of observation; current U(s'); only the state left changes; terminal U set to its reward on first arrival.
+6. ADP: learns model, costly per step, best data efficiency. TD: model-free, cheap per step.
+7. Exploration: greedy gets stuck (untried estimates never change). Occasionally random: prob 1/t (high t = exploit, low t = explore).
+   f(u,n) = R+ if n < N_e else u. High R+ / high N_e = more exploration. Directed vs random exploration.
