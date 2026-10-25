@@ -5,3 +5,4 @@
 - The learner solved Tutorial 9 concepts well (skills 1-8; mock exam Q1 and Q2(a)(b)(c) with only arithmetic slips). T9 formula sheet: learn/reference/T09-formula-sheet.md.
 - Textbook copy numbers chapters 15/16 (MDPs, T9) and 23 (RL, T10); navigate by section title.
 - Hidden answer keys live in the session scratchpad, never in the repo.
+- EXAM FORMAT (told by learner 2026-10-25): working carries NO marks; only the final answer is entered on the answer sheet. Many select-ALL-that-apply questions (no relation between number of correct options and points). So: teach quick self-checks and option-elimination, not "show working for method marks".
